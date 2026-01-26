@@ -1,0 +1,187 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Personal Budget II ",
+    "version": "1.0.0.0"
+  },
+  "paths": {
+    "/envelops": {
+      "summary": "get and post ",
+      "description": "to get and post envelops based on operation ",
+      "get": {
+        "summary": "get all envelops ",
+        "description": "to retrieve all envelops from the DB",
+        "operationId": "get_envelops",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      },
+      "post": {
+        "summary": "post envelop",
+        "description": "to add a new envelop  to the DB ",
+        "operationId": "post_envelop",
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      }
+    },
+    "/envelops/id": {
+      "summary": "get or delete or update ",
+      "get": {
+        "summary": "get envelop",
+        "description": "to retrieve a specific envelop with an Id from the DB ",
+        "operationId": "get_envelops_id",
+        "parameters": [
+          {
+            "name": {
+              "id": null
+            },
+            "in": "path",
+            "description": "The id of the order.",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      },
+      "put": {
+        "summary": "update envelop",
+        "description": "to edit an existing envelop with an id from the DB",
+        "operationId": "put_envelops",
+        "parameters": [
+          {
+            "name": {
+              "id": null
+            },
+            "in": "path",
+            "description": "The id of the envelop to update from the DB  .",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete an envelop",
+        "description": "to delete an existing envelop with an id from the DB ",
+        "operationId": "delete_envelop",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the envelop to delete from the DB .",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default error sample response"
+          }
+        }
+      }
+    },
+    "/envelops/transfer/from/to ": {
+      "summary": "to tranfer money ",
+      "put": {
+        "summary": "tranfer money ",
+        "description": "to tranfer money from one envelop with id to another envelop with id ",
+        "operationId": "put_transfer",
+        "parameters": [
+          {
+            "name": "from",
+            "in": "path",
+            "description": "The id of the envelop to tranfer the money from .",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "name": "to",
+            "in": "path",
+            "description": "The id of the envelop to tranfer the money to .",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Default error sample response",
+            "content": {
+              "text/plain; charset=utf-8": {
+                "examples": {
+                  "transfer": {
+                    "value": "transferred successfully "
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "summary": "get transactions ",
+      "get": {
+        "summary": "get all transactions ",
+        "description": "to retrieve all transactions from the DB ",
+        "operationId": "get_transactions ",
+        "responses": {
+          "default": {
+            "description": null
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "envelops": {
+        "type": "object",
+        "properties": {
+          "total_budget": {
+            "type": "number"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "spent": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "transactions": {
+        "type": "object",
+        "properties": {
+          "amountToBeTransferred": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
