@@ -18,7 +18,7 @@ async function apiRequest(path, method = 'GET', body = null) {
   if (body) {
     options.body = JSON.stringify(body);
   }
-  const response = await fetch('http://localhost:3000/api' + path, options);
+  const response = await fetch('https://personal-budget-d0po.onrender.com/api'+path,options)
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     alert(errorData.message || 'Request failed');
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('login-form');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const identifier = document.getElementById('login-email').value.trim();
+    const id = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
     try {
       const result = await apiRequest('/login', 'POST', { identifier, password });

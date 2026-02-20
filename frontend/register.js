@@ -18,7 +18,7 @@ async function apiRequest(path, method = 'GET', body = null) {
   if (body) {
     options.body = JSON.stringify(body);
   }
-  const response = await fetch('http://localhost:3000/api' + path, options);
+  const response = await fetch('https://personal-budget-d0po.onrender.com/api'+path,options)
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
     alert(errorData.message || 'Request failed');

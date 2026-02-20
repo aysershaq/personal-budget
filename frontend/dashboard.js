@@ -5,7 +5,7 @@
 */
 
 // API base path
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = 'https://personal-budget-d0po.onrender.com/api'
 
 
 
