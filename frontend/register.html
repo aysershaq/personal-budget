@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Registration page for the Personal Budget application.  
+  This form collects user details including name, email, and password and sends them to the backend for account creation.  
+  Comments in English explain each part of the form.  
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Personal Budget</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Personal Budget</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="register.html" class="active">Register</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="form-container">
+      <h2>Create an Account</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="income">Monthly Income</label>
+          <input type="number" id="income" name="income" min="0" step="0.01" required />
+        </div>
+        <button type="submit" class="btn">Register</button>
+      </form>
+      <p>
+        Already have an account? <a href="login.html">Login here</a>.
+      </p>
+      <!-- Element to show error messages returned from the server -->
+      <div id="registerError" class="error-message"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2026 Personal Budget. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Login page for the Personal Budget application.  
+  This page allows users to log into their accounts to access their budget dashboard.  
+  The form uses basic HTML and JavaScript for simple validation and to send a login request to the backend server.  
+  Comments are provided in English for clarity.  
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Personal Budget</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Personal Budget</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="login.html" class="active">Login</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="form-container">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+      <p>
+        Don't have an account? <a href="register.html">Register here</a>.
+      </p>
+      <!-- Element to show error messages returned from the server -->
+      <div id="loginError" class="error-message"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2026 Personal Budget. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

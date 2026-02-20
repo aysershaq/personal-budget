@@ -17,10 +17,8 @@ db.Transactions = transactionsModel(sequelize, DataTypes);
 db.Income = incomeModel(sequelize,DataTypes)
 db.Expenses = expensesModel(sequelize,DataTypes)
 db.Users = usersModel(sequelize, DataTypes); // ✅ أضف هذا
-db.Transactions.belongsTo(db.Envelops, { foreignKey: "from_envelop_id", as: "from" });
-db.Transactions.belongsTo(db.Envelops, { foreignKey: "to_envelop_id", as: "to" });
-
-db.Income.belongsTo(db.Users,{ foreignKey: "user_id", as: "userId" })
-db.Expenses.belongsTo(db.Users,{ foreignKey: "user_id", as: "userId" })
+// db.Transactions.belongsTo(db.Envelops, { foreignKey: "envelop_id", as: "envelop-id" });
+db.Transactions.belongsTo(db.Envelops, { foreignKey: 'envelop_id' });
+db.Envelops.hasMany(db.Transactions, { foreignKey: 'envelop_id' });
 
 module.exports = db; // ✅ رجّع db مباشرة

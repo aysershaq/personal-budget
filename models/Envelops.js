@@ -9,16 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      total_budget: {
+      balance: {
         type: DataTypes.DECIMAL,
-        allowNull: false,
+        allowNull: true,
       },
-      spent: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-      },
+      
       user_id: {
              type: DataTypes.INTEGER,
          allowNull: false,
@@ -26,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       tableName: "Envelops",
-      timestamps: false,
+      timestamps: true,
       underscored: true,
     }
   );

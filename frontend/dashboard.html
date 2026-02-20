@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Dashboard page for the Personal Budget application.  
+  After logging in, users are redirected here to view and manage their budgets.  
+  The dashboard displays the user's current budget summary, a list of incomes and expenses, and interactive charts.  
+  Comments in English explain each section of the page.  
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Personal Budget</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Include Chart.js for rendering charts -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"
+    defer
+  ></script>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <h1>Personal Budget Dashboard</h1>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="index.html" id="logoutLink">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="summary">
+      <h2>Budget Summary</h2>
+      <div class="summary-cards">
+        <div class="card">
+          <h3>Total Income</h3>
+          <p id="totalIncome">$0.00</p>
+        </div>
+        <div class="card">
+          <h3>Total Expenses</h3>
+          <p id="totalExpenses">$0.00</p>
+        </div>
+        <div class="card">
+          <h3>Balance</h3>
+          <p id="balance">$0.00</p>
+        </div>
+      </div>
+    </section>
+    <section class="entries">
+      <div class="income-section">
+        <h3>Add Income</h3>
+        <form id="addIncomeForm">
+          <div class="form-group">
+            <label for="incomeDescription">Description</label>
+            <input type="text" id="incomeDescription" name="description" required />
+          </div>
+          <div class="form-group">
+            <label for="incomeAmount">Amount</label>
+            <input type="number" id="incomeAmount" name="amount" min="0" step="0.01" required />
+          </div>
+          <button type="submit" class="btn">Add Income</button>
+        </form>
+        <ul id="incomeList" class="entry-list"></ul>
+      </div>
+      <div class="expense-section">
+        <h3>Add Expense</h3>
+        <form id="addExpenseForm">
+          <div class="form-group">
+            <label for="expenseDescription">Description</label>
+            <input type="text" id="expenseDescription" name="description" required />
+          </div>
+          <div class="form-group">
+            <label for="expenseAmount">Amount</label>
+            <input type="number" id="expenseAmount" name="amount" min="0" step="0.01" required />
+          </div>
+          <button type="submit" class="btn">Add Expense</button>
+        </form>
+        <ul id="expenseList" class="entry-list"></ul>
+      </div>
+    </section>
+    <section class="charts">
+      <h2>Spending Overview</h2>
+      <canvas id="spendingChart" width="400" height="200"></canvas>
+    </section>
+    <!-- Error message placeholder for the dashboard -->
+    <div id="dashboardError" class="error-message"></div>
+  </main>
+  <footer>
+    <p>&copy; 2026 Personal Budget. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

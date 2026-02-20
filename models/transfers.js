@@ -21,7 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING, // ✅ لازم نص
         allowNull: false,
       },
-      envelop_id: {
+      from_envelop_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      to_envelop_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -29,17 +33,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      to_envelop_id: {
-       type: DataTypes.INTEGER,
-        allowNull: true,
-
-      }
     },
     {
       tableName: "Transactions",
-      timestamps: true, 
-        underscored: true
-// ✅ لتجنب created_at/updated_at
+      timestamps: true, // ✅ لتجنب created_at/updated_at
     }
   );
 

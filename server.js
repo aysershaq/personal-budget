@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const helmet = require("helmet")
-
+const cors = require('cors');
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger/swagger.json");
 
@@ -9,8 +9,8 @@ const envelopRouter = require("./routes/envelopRouter");
 const transactionRouter = require("./routes/transactionRoute"); // لو عندك الراوت
 const userRouter = require("./routes/usersRoute")
 const db = require("./models");
-const incomeRouter = require("./routes/incomeRoute");
-const expensesRouter = require("./routes/expensesRoute");
+const reportsRouter = require("./routes/reportsRoute");
+
 const  app = express();
 
  // adjust path
@@ -24,13 +24,21 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use(helmet());
+app.use(cors({
+
+  origin: ["http://127.0.0.1:5500"],
+   
+ // السماح لهذا النطاق فقط
+  methods: ['GET','POST','PUT','DELETE','PATCH',"OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false // السماح بإرسال الكوكي/التوكن عبر الطلبات (إن لزم)
+}));
 
 app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api", envelopRouter);
 app.use("/api", transactionRouter); // لو عندك
 app.use("/api", userRouter)
-app.use("/api",incomeRouter)
-app.use("/api",expensesRouter)
+app.use("/api",reportsRouter)
 
 app.get("/",(req,res)=>{
 

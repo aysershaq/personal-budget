@@ -59,65 +59,26 @@ createEnvelop:async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-       const userId = Number(req.params.id);
-    if (Number.isNaN(userId)) {
-      return res.status(400).json({ error: "Invalid userId in params" });
-    }
+       const userId = Number(req.user.id);
+    
 
-        const existing  = await  db.Users.findOne({where:{id:userId}})
-        if(existing){
-    const { title, total_budget, spent } = req.body;
+       
+        
+    const { title, balance } = req.body;
      const indsertedEnvelop =await  db.Envelops.create({
       title,
-      total_budget,
-      spent,
+      balance,
+      
       user_id:userId
 
      })
 
-
-      const EnvelopsOfUser =await  db.Envelops.findAll({where:{user_id:userId}})
-              console.log("Envelops:",EnvelopsOfUser)
-              let sum = 0
-               const totalSpent = EnvelopsOfUser.reduce(
-                  (sum, n) => sum + Number(n.spent || 0),
-                                    0
-               )
-               const totalPrice = EnvelopsOfUser.reduce(
-                            (sum, n) => sum + Number(n.total_budget || 0),
-                                    0
-                                 );
-
-                    console.log("Total_price_is:",totalPrice);
-                          const existingRecordInIncome =   await db.Income.findOne({where:{user_id:userId}})
-                          if(existingRecordInIncome){
-              const income = await db.Income.update({income:totalPrice},
-                 { where: { user_id: userId } }
-              )
-            }else{
-              const income = await db.Income.create({user_id:userId,income:totalPrice})
-            }
-            const existingRecordInExpenses = await db.Expenses.findOne({where:{user_id:userId}})
-            if(existingRecordInExpenses){
-
-              const spent = await db.Expenses.update({spent:totalSpent},
-                {where:{user_id:userId}}
-              )
-
-            }else{
-
-        const spent = await db.Expenses.create({user_id:userId,spent:totalSpent})
-        console.log("spent is 123",spent)
-
-            }
-
+       res.status(201).json(indsertedEnvelop);
         
            // 6
 
-      res.status(201).json(indsertedEnvelop);
-    }else{
-      res.send("User Not found")
-    }
+     
+   
     } catch (error) {
       console.error('Error creating envelope:', error.stack || error);
       res.status(500).json({ error: 'Internal server error', details: error.message });
@@ -136,7 +97,7 @@ createEnvelop:async (req, res) => {
         console.log(userId)
         const envelopId = Number(req.params.envelop_id) // ✔ FIXED
   
-        const { title, total_budget, spent } = req.body;
+        const { title, balance } = req.body;
         
         const existingUser = await db.Users.findOne({ where: { id: userId } });
 if (!existingUser) return res.status(404).send("User Not Found");
@@ -144,24 +105,14 @@ if (!existingUser) return res.status(404).send("User Not Found");
 const existingEnvelop = await db.Envelops.findByPk(envelopId);
 if (!existingEnvelop) return res.status(404).send("envelop not found");
 
-existingEnvelop.total_budget = total_budget;
-existingEnvelop.spent = spent;
+
+existingEnvelop.title = title;
+existingEnvelop.total_budget = balance;
 await existingEnvelop.save();
 
-const EnvelopsOfUser = await db.Envelops.findAll({ where: { user_id: userId } });
 
-const totalBudget = EnvelopsOfUser.reduce((sum, n) => sum + Number(n.total_budget || 0), 0);
-const totalSpent  = EnvelopsOfUser.reduce((sum, n) => sum + Number(n.spent || 0), 0);
 
-await db.Income.update(
-  { income: totalBudget },
-  { where: { user_id: userId } }
-);
 
-await db.Expenses.update(
-  { spent: totalSpent },
-  { where: { user_id: userId } }
-);
 
  res.status(200).json(existingEnvelop);
      
@@ -188,21 +139,7 @@ await db.Expenses.update(
     if (!envelope) {
       return res.status(404).json({ error: "Envelope not found" });
     }
-        const incomeRow = await db.Income.findOne({ where: { user_id: userId } });
-    const expensesRow = await db.Expenses.findOne({ where: { user_id: userId } });
-
-    const currentIncome = Number(incomeRow?.income || 0);
-    const currentSpent  = Number(expensesRow?.spent || 0);
-
-         await db.Income.update(
-      { income: currentIncome - Number(envelope.total_budget || 0) },
-      { where: { user_id: userId } }
-    );
-
-    await db.Expenses.update(
-      { spent: currentSpent - Number(envelope.spent || 0) },
-      { where: { user_id: userId } }
-    );
+        
     // 2) ثم احذفه
     await envelope.destroy();
 
@@ -216,20 +153,18 @@ await db.Expenses.update(
 getAllEnvelopsOfUser:async(req,res)=>{
 
   try{
-    userId = Number(req.params.id)
+    userId = Number(req.user.id)
 
-    const existing = await  db.Users.findOne({where:{id:userId}})
-    if(existing){
+   
+    
 const envelops =  await  db.Envelops.findAll({where:{user_id:userId}})
+console.log("User Envelops",envelops)
     if(envelops){
       res.status(200).json({msg:"envelops of user retrieved sucessfully",envelops:envelops})
     }else{
       res.status(404).send("User does not have envelops yet")
     }
-    }else{
-      res.send("User Not Found")
-    }
-
+  
     
   }catch(err){
 
@@ -237,5 +172,25 @@ const envelops =  await  db.Envelops.findAll({where:{user_id:userId}})
   }
 
 
+},
+getSingleEnvelop:async(req,res)=>{
+  const id = Number(req.params.id)
+  try{
+
+    const envelop = await  db.Envelops.findByPk(id)
+    if(envelop){
+
+      res.status(200).json({msg:"retrieved sucessfully",envelop:envelop})
+    }else{
+      res.status(404).send("envelop Not found")
+
+
+    }
+
+
+  }catch(err){
+
+    res.json({error:err.message})
+  }
 }
 }
