@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
        type: DataTypes.INTEGER,
         allowNull: true,
 
+      },
+      envelope_name:{
+        type: DataTypes.STRING, // ✅ لازم نص
+        allowNull: true,
+      },
+      to_envelop:{
+        type: DataTypes.STRING, // ✅ لازم نص
+        allowNull: true,
       }
     },
     {

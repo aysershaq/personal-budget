@@ -37,9 +37,15 @@ module.exports = {
     ],
     [
       fn(
-        'SUM',
-        literal(`CASE WHEN type = 'income' THEN amount ELSE -amount END`)
-      ),
+    'SUM',
+    literal(`
+      CASE
+        WHEN type = 'income'  THEN amount
+        WHEN type = 'expense' THEN -amount
+        ELSE 0
+      END
+    `)
+  ),
       'net_cashflow'
     ],
     [

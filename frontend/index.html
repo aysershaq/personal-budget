@@ -1,67 +1,25 @@
+<!--
+  Personal Budget Landing Page
+
+  This is a simple landing page that welcomes users and provides
+  navigation to the login and register pages. It uses the common
+  style.css for consistent styling across the application.
+-->
 <!DOCTYPE html>
 <html lang="en">
-<!--
-  Landing page for the Personal Budget application.  
-  This page welcomes users and provides access to the login/register views.  
-  All text is written in English and comments are provided to explain the purpose of each section.  
-  Use responsive CSS in the linked stylesheet to ensure that the layout adapts to different screen sizes.  
--->
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal Budget App</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header>
-    <nav class="navbar">
-      <h1>Personal Budget</h1>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="register.html">Register</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section class="hero">
-      <h2>Welcome to Your Personal Budget</h2>
-      <p>
-        Manage your income and expenses, track spending, and plan for your
-        financial goals with our intuitive budgeting application.
-      </p>
-      <div class="hero-buttons">
-        <a class="btn" href="register.html">Get Started</a>
-        <a class="btn btn-secondary" href="login.html">Log In</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Budget | Home</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1 class="app-title">Welcome to Personal Budget</h1>
+      <div class="card-container" style="justify-content: center;">
+        <a href="login.html" class="primary button-link">Login</a>
+        <a href="register.html" class="secondary button-link">Register</a>
       </div>
-    </section>
-    <section class="features">
-      <div class="feature">
-        <h3>Income &amp; Expense Tracking</h3>
-        <p>
-          Log all of your income sources and expenses in one place, and keep
-          tabs on your financial health.
-        </p>
-      </div>
-      <div class="feature">
-        <h3>Budget Categories</h3>
-        <p>
-          Organize spending into categories to see where your money goes and
-          adjust your habits accordingly.
-        </p>
-      </div>
-      <div class="feature">
-        <h3>Financial Reports</h3>
-        <p>
-          Generate detailed charts and summaries to visualize your budget
-          performance over time.
-        </p>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2026 Personal Budget. All rights reserved.</p>
-  </footer>
-  <script src="script.js"></script>
-</body>
+    </div>
+  </body>
 </html>

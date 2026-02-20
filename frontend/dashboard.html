@@ -1,92 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--
-  Dashboard page for the Personal Budget application.  
-  After logging in, users are redirected here to view and manage their budgets.  
-  The dashboard displays the user's current budget summary, a list of incomes and expenses, and interactive charts.  
-  Comments in English explain each section of the page.  
--->
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard - Personal Budget</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Include Chart.js for rendering charts -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"
-    defer
-  ></script>
-</head>
-<body>
-  <header>
-    <nav class="navbar">
-      <h1>Personal Budget Dashboard</h1>
-      <ul class="nav-links">
-        <li><a href="dashboard.html" class="active">Dashboard</a></li>
-        <li><a href="index.html" id="logoutLink">Logout</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section class="summary">
-      <h2>Budget Summary</h2>
-      <div class="summary-cards">
-        <div class="card">
-          <h3>Total Income</h3>
-          <p id="totalIncome">$0.00</p>
-        </div>
-        <div class="card">
-          <h3>Total Expenses</h3>
-          <p id="totalExpenses">$0.00</p>
-        </div>
-        <div class="card">
-          <h3>Balance</h3>
-          <p id="balance">$0.00</p>
-        </div>
-      </div>
-    </section>
-    <section class="entries">
-      <div class="income-section">
-        <h3>Add Income</h3>
-        <form id="addIncomeForm">
-          <div class="form-group">
-            <label for="incomeDescription">Description</label>
-            <input type="text" id="incomeDescription" name="description" required />
-          </div>
-          <div class="form-group">
-            <label for="incomeAmount">Amount</label>
-            <input type="number" id="incomeAmount" name="amount" min="0" step="0.01" required />
-          </div>
-          <button type="submit" class="btn">Add Income</button>
-        </form>
-        <ul id="incomeList" class="entry-list"></ul>
-      </div>
-      <div class="expense-section">
-        <h3>Add Expense</h3>
-        <form id="addExpenseForm">
-          <div class="form-group">
-            <label for="expenseDescription">Description</label>
-            <input type="text" id="expenseDescription" name="description" required />
-          </div>
-          <div class="form-group">
-            <label for="expenseAmount">Amount</label>
-            <input type="number" id="expenseAmount" name="amount" min="0" step="0.01" required />
-          </div>
-          <button type="submit" class="btn">Add Expense</button>
-        </form>
-        <ul id="expenseList" class="entry-list"></ul>
-      </div>
-    </section>
-    <section class="charts">
-      <h2>Spending Overview</h2>
-      <canvas id="spendingChart" width="400" height="200"></canvas>
-    </section>
-    <!-- Error message placeholder for the dashboard -->
-    <div id="dashboardError" class="error-message"></div>
-  </main>
-  <footer>
-    <p>&copy; 2026 Personal Budget. All rights reserved.</p>
-  </footer>
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard – Personal Budget</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <section id="dashboard-section">
+        <header class="top-bar">
+          <h1>Dashboard</h1>
+          <button id="logout-button" class="secondary" type="button">Logout</button>
+        </header>
+
+        <section id="user-info" class="info-panel"></section>
+        <section id="summary-info" class="info-panel"></section>
+
+        <!-- Envelopes list (Edit/Delete buttons + inline edit forms will be injected here by dashboard.js) -->
+        <section id="envelope-list" class="info-panel"></section>
+
+        <!-- Transactions table (Delete buttons will be injected here by dashboard.js) -->
+        <section id="transaction-list" class="info-panel"></section>
+
+        <!-- Reports filter will be injected here (NEW container for stable placement) -->
+        <section id="reports-filter-container" class="info-panel"></section>
+
+        <!-- Reports tables will be rendered here -->
+        <section id="reports-section" class="info-panel"></section>
+
+        <section id="actions-section" class="actions">
+          <form id="add-envelope-form" class="card" autocomplete="off">
+            <h2>Add Envelope</h2>
+            <label for="envelope-name">Envelope Name</label>
+            <input
+              type="text"
+              id="envelope-name"
+              required
+              placeholder="Envelope Name"
+            />
+
+            <label for="envelope-budget">Budget Amount</label>
+            <input
+              type="number"
+              id="envelope-budget"
+              required
+              min="0"
+              step="0.01"
+              placeholder="Budget Amount"
+            />
+
+            <button type="submit" class="primary">Add Envelope</button>
+          </form>
+
+          <form id="add-transaction-form" class="card" autocomplete="off">
+            <h2>Add Transaction</h2>
+
+            <label for="transaction-type">Type</label>
+            <select id="transaction-type" required>
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+              <option value="transfer">Transfer</option>
+            </select>
+
+            <label for="transaction-amount">Amount</label>
+            <input
+              type="number"
+              id="transaction-amount"
+              required
+              min="0"
+              step="0.01"
+              placeholder="Amount"
+            />
+
+            <label for="transaction-date">Date</label>
+            <input type="date" id="transaction-date" required />
+
+            <label for="transaction-envelope">Envelope</label>
+            <select id="transaction-envelope" required></select>
+
+            <label for="transaction-to-envelope" class="transfer-only hidden">Transfer To</label>
+            <select id="transaction-to-envelope" class="transfer-only hidden"></select>
+
+        
+
+            <button type="submit" class="primary">Add Transaction</button>
+          </form>
+        </section>
+      </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
 </html>

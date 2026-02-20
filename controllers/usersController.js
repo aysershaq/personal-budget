@@ -12,7 +12,7 @@ module.exports ={
 
   registerUser:async(req , res)=>{
 
-  const {userName ,email,password} = req.body;
+  const {name ,email,password} = req.body;
 
 const passwordRaw = req.body?.password;
 
@@ -61,7 +61,7 @@ const hashedPassword=await  bcrypt.hash(passwordStr,salt)
           if(Object.keys(users).length === 0){
             const role="admin"
       // await db.Income.create({user_id:})
-    const user =await   db.Users.create({user_name:userName,email:email,password:hashedPassword,role:role})
+    const user =await   db.Users.create({user_name:name,email:email,password:hashedPassword,role:role})
                        console.log(user)
                      await db.Income.create({user_id:user.id,income:0})
                     await db.Expenses.create({user_id:user.id,spent:0})
@@ -70,7 +70,7 @@ const hashedPassword=await  bcrypt.hash(passwordStr,salt)
               }else{
                  const role="user"
 
-                   const user =await   db.Users.create({user_name:userName,email:email,password:hashedPassword,role:role})
+                   const user =await   db.Users.create({user_name:name,email:email,password:hashedPassword,role:role})
                       await db.Income.create({user_id:user.id,income:0})
                      await db.Expenses.create({user_id:user.id,spent:0})
                    res.status(201).json({msg:"registered sucessfully",NewUser:user})
@@ -78,9 +78,8 @@ const hashedPassword=await  bcrypt.hash(passwordStr,salt)
    }
   
 }catch(err){
-  console.log(err.message)
-
   res.status(500).json({error:err.message})
+
 }
 
 
@@ -166,9 +165,9 @@ logInUser:async (req, res) => {
   }
 },
 getSingleUser:async(req ,res)=>{
-
+  const userId = req.user.id
   try{
-    const user =await  db.Users.findOne({where:{id:Number(req.params.id)}})
+    const user =await  db.Users.findOne({where:{id:userId}})
     if(user){
       res.json({msg:"user retrievrd sucessfully",user:user})
     }else{

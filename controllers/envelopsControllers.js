@@ -107,7 +107,7 @@ if (!existingEnvelop) return res.status(404).send("envelop not found");
 
 
 existingEnvelop.title = title;
-existingEnvelop.total_budget = balance;
+existingEnvelop.balance = balance;
 await existingEnvelop.save();
 
 
@@ -142,6 +142,7 @@ await existingEnvelop.save();
         
     // 2) ثم احذفه
     await envelope.destroy();
+    await db.Transactions.destroy({where:{envelop_id:envelopId}})
 
     // 3) أرجع البيانات التي كانت موجودة قبل الحذف
     return res.status(200).json({ msg: "deleted successfully", deletedEnvelop: envelope });
@@ -160,7 +161,7 @@ getAllEnvelopsOfUser:async(req,res)=>{
 const envelops =  await  db.Envelops.findAll({where:{user_id:userId}})
 console.log("User Envelops",envelops)
     if(envelops){
-      res.status(200).json({msg:"envelops of user retrieved sucessfully",envelops:envelops})
+      res.status(200).json({envelops:envelops})
     }else{
       res.status(404).send("User does not have envelops yet")
     }

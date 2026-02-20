@@ -1,5 +1,14 @@
-require('dotenv').config();
 
+const path = require('path');
+
+
+require('dotenv').config({
+  path: [
+    path.resolve(__dirname, '../.env.production'),
+    path.resolve(__dirname, '../.env'),
+  ],
+  override: true, // يخلي الأخير يفوز أو حسب ترتيبك
+});
 module.exports = {
   development: {
     username: process.env.DB_USER,
@@ -9,7 +18,7 @@ module.exports = {
     dialect: 'postgres'
   },
   production: {
-    use_env_variable: 'DATABASE_URL',
+    use_env_variable: 'DB_URL',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {

@@ -14,7 +14,7 @@ const userRouter =  express.Router()
 
 
 
-userRouter.post("/register",[body('userName').notEmpty().withMessage('userName is required'),
+userRouter.post("/register",[body('name').notEmpty().withMessage('userName is required'),
 body('email')
       .notEmpty()
       .withMessage('email is required')
@@ -34,12 +34,12 @@ userRouter.post("/login",logInUser)
 userRouter.post("/logout",logOutUser)
 
 
-userRouter.delete("/user/:id",verifyToken, ensureAdmin,deleteUser)
+userRouter.delete("/user/:id",verifyToken, deleteUser)
 
 
-userRouter.get("/users",verifyToken, ensureAdmin ,getAllUsers)
+userRouter.get("/users",verifyToken,getAllUsers)
 
-userRouter.get("/user/:id",verifyToken,ensureAdmin,getSingleUser)
+userRouter.get("/user",verifyToken,getSingleUser)
 
 
 
