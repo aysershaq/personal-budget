@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('login-form');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const id = document.getElementById('login-email').value.trim();
+    const identifier = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
     try {
       const result = await apiRequest('/login', 'POST', { identifier, password });
